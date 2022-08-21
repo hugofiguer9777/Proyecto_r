@@ -1,2 +1,14 @@
 # Proyecto_r
-Proyecto de clase en R
+## Proyecto de clase en R
+## Nombre: Hugo René Figueroa Castillo
+## Carnet: 999008347
+
+---
+
+*UNIVERSIDAD DE SAN CARLOS DE GUATEMALA*
+
+*FACULTAD DE INGENIERÍA*
+
+*ESCUELA DE ESTUDIOS DE POSTGRADOS*
+
+*FUNDAMENTOS DE PROGRAMACION Y SCRIPTING*
