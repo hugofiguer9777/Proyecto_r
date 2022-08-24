@@ -116,11 +116,64 @@ ggplot(death_by_year, aes(x = year, y = mean)) +
 
 ```
 
+6. Los resultados del lavado de manos
+
+6.1. Agregue una columna TRUE/FALSE a monthly llamado handwashing_started, que será
+     TRUE a partir del año en que se impuso el lavado de manos.
+
+```{r}
+monthly %>%
+  mutate(handwashing_started = date >= as.Date("1847-01-01"))
+
+```
+
+6.2. Haga una gráfica lineal de proportion_deaths por fecha para el data frame monthly
+     usando ggplot. Haga que el color de la línea dependa de handwashing_started.
+     
+6.3. Utilice la función labs para dar al eje x y al eje y una estética a las etiquetas.
+
+```{r}
+monthly_proportion2 <- monthly_proportion %>%
+  mutate(handwashing_started = date >= as.Date("1847-01-01"))
+
+ggplot(monthly_proportion2, aes(x = date, y = proportion_deaths, color = handwashing_started)) +
+  labs(x = "Date", y = "Proportion Deaths", color = "Handwashing Started") +
+  geom_line()
+
+```
+
+7. ¿Más lavado de manos, menos muertes?
+Nuevamente, las estadísticas demuestran que lavarse las manos tuvo un efecto enorme.
+¿Cuánto redujo la proporción mensual de muertes en promedio?
+
+7.1. Utilice group_by y summarise para calcular el promedio de proportion_deaths antes y
+     después de que se impusiera el lavado de manos.
+
+7.2. Asigne el resultado en la variable month_summary e imprímala.
+
+7.3. El data frame resultante debería verse como el siguiente:
+
+```{r}
+month_summary <- monthly_proportion2 %>%
+  group_by(handwashing_started) %>%
+  summarise(mean(proportion_deaths)) %>%
+  rename(mean_proportion_deaths = `mean(proportion_deaths)`)
+
+month_summary
+
+```
 
 
 
+```{r}
+month_summary2 <- monthly_proportion2 %>%
+  group_by(handwashing_started)
 
+month_summary2
+  
+t.test(month_summary2 ~ handwashing_started, data = month_summary2)
 
+```
 
 
 
