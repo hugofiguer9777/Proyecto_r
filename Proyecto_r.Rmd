@@ -99,9 +99,8 @@ ggplot(monthly_proportion, aes(x = date, y = proportion_deaths)) +
 
 ```{r}
 death_by_year <- monthly %>%
-  group_by(format(date, format = "%Y")) %>%
-  summarise(mean(deaths)) %>%
-  rename(year = `format(date, format = "%Y")`, mean = `mean(deaths)`)
+  group_by(year = format(date, format = "%Y")) %>%
+  summarise(mean = mean(deaths))
   
 death_by_year
 
@@ -156,8 +155,7 @@ Nuevamente, las estadísticas demuestran que lavarse las manos tuvo un efecto en
 ```{r}
 month_summary <- monthly_proportion2 %>%
   group_by(handwashing_started) %>%
-  summarise(mean(proportion_deaths)) %>%
-  rename(mean_proportion_deaths = `mean(proportion_deaths)`)
+  summarise(mean_proportion_deaths = mean(proportion_deaths))
 
 month_summary
 
@@ -171,23 +169,9 @@ month_summary2 <- monthly_proportion2 %>%
 
 month_summary2
   
-t.test(month_summary2 ~ handwashing_started, data = month_summary2)
+#t.test(month_summary2 ~ handwashing_started, data = month_summary2)
 
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
