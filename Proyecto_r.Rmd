@@ -122,7 +122,7 @@ ggplot(death_by_year, aes(x = year, y = mean)) +
 
 ```{r}
 monthly %>%
-  mutate(handwashing_started = date >= as.Date("1847-01-01"))
+  mutate(handwashing_started = date >= "1847-01-01")
 
 ```
 
@@ -133,7 +133,7 @@ monthly %>%
 
 ```{r}
 monthly_proportion2 <- monthly_proportion %>%
-  mutate(handwashing_started = date >= as.Date("1847-01-01"))
+  mutate(handwashing_started = date >= "1847-01-01")
 
 ggplot(monthly_proportion2, aes(x = date, y = proportion_deaths, color = handwashing_started)) +
   labs(x = "Date", y = "Proportion Deaths", color = "Handwashing Started") +
@@ -169,7 +169,7 @@ month_summary2 <- monthly_proportion2 %>%
 
 month_summary2
   
-#t.test(month_summary2 ~ handwashing_started, data = month_summary2)
+t.test(proportion_deaths ~ handwashing_started, data = month_summary2)
 
 ```
 
