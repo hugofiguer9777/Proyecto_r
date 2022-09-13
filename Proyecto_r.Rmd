@@ -22,10 +22,10 @@ yearly
 ```{r}
 library("dplyr")
 
-yearly_proportion <- yearly %>%
+yearly <- yearly %>%
   mutate(proportion_deaths = deaths/births)
 
-yearly_proportion
+yearly
 
 ```
 
@@ -38,7 +38,7 @@ yearly_proportion
 ```{r}
 library(ggplot2)
 
-ggplot(yearly_proportion, aes(x = year, y = proportion_deaths, color = clinic)) +
+ggplot(yearly, aes(x = year, y = proportion_deaths, color = clinic)) +
   geom_line()
 
 ```
@@ -59,17 +59,17 @@ monthly
      como la proporción de muertes por número de nacimientos.
 
 ```{r}
-monthly_proportion <- monthly %>%
+monthly <- monthly %>%
   mutate(proportion_deaths = deaths/births)
 
-monthly_proportion
+monthly
 
 ```
 
 4.3. Imprima las primeras filas de monthly usando la función head().
 
 ```{r}
-monthly_proportion %>%
+monthly %>%
   head()
 
 ```
@@ -80,7 +80,7 @@ monthly_proportion %>%
      usando ggplot.
 
 ```{r}
-ggplot(monthly_proportion, aes(x = date, y = proportion_deaths)) +
+ggplot(monthly, aes(x = date, y = proportion_deaths)) +
   geom_line()
 
 ```
@@ -88,7 +88,7 @@ ggplot(monthly_proportion, aes(x = date, y = proportion_deaths)) +
 5.2. Utilice la función labs para dar al eje x y al eje y una estética a las etiquetas.
 
 ```{r}
-ggplot(monthly_proportion, aes(x = date, y = proportion_deaths)) +
+ggplot(monthly, aes(x = date, y = proportion_deaths)) +
   labs(x = "Date", y = "Proportion Deaths") +
   geom_line()
 
@@ -121,7 +121,7 @@ ggplot(death_by_year, aes(x = year, y = mean)) +
      TRUE a partir del año en que se impuso el lavado de manos.
 
 ```{r}
-monthly %>%
+monthly <- monthly %>%
   mutate(handwashing_started = date >= "1847-01-01")
 
 ```
@@ -132,10 +132,10 @@ monthly %>%
 6.3. Utilice la función labs para dar al eje x y al eje y una estética a las etiquetas.
 
 ```{r}
-monthly_proportion2 <- monthly_proportion %>%
-  mutate(handwashing_started = date >= "1847-01-01")
+#monthly_proportion2 <- monthly_proportion %>%
+#  mutate(handwashing_started = date >= "1847-01-01")
 
-ggplot(monthly_proportion2, aes(x = date, y = proportion_deaths, color = handwashing_started)) +
+ggplot(monthly, aes(x = date, y = proportion_deaths, color = handwashing_started)) +
   labs(x = "Date", y = "Proportion Deaths", color = "Handwashing Started") +
   geom_line()
 
@@ -153,7 +153,7 @@ Nuevamente, las estadísticas demuestran que lavarse las manos tuvo un efecto en
 7.3. El data frame resultante debería verse como el siguiente:
 
 ```{r}
-month_summary <- monthly_proportion2 %>%
+month_summary <- monthly %>%
   group_by(handwashing_started) %>%
   summarise(mean_proportion_deaths = mean(proportion_deaths))
 
@@ -163,18 +163,11 @@ month_summary
 
 
 
-```{r}
-month_summary2 <- monthly_proportion2 %>%
-  group_by(handwashing_started)
+8. Análisis estadístico de los datos de lavado de manos
 
-month_summary2
-  
-t.test(proportion_deaths ~ handwashing_started, data = month_summary2)
+```{r}
+
+t.test(proportion_deaths ~ handwashing_started, data = monthly)
 
 ```
-
-
-
-
-
 
